@@ -1,8 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const cors = require('cors');
-const dotenv = require('dotenv');
+import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import cors from 'cors';
+import dotenv from 'dotenv';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
