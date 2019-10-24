@@ -1,5 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -10,6 +12,9 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors());
 dotenv.config();
+
+const swaggerDocument = YAML.load('./swagger.yaml');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const port = 3000 || process.env.PORT;
 
