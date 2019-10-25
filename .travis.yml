@@ -6,6 +6,13 @@ cache:
     - "node_modules"
 install:
  npm install
+addons:
+    code_climate:
+        repo_token: 1b4c4d3f0243f6322b1c10586d448ff203161d1641cd6872ab6135961c2f5ea8
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
   - npm test
 after_success:

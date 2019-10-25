@@ -1,6 +1,7 @@
 [![Heroku](https://img.shields.io/badge/Heroku-🚀-green)](https://mark-my-way.herokuapp.com/)
 [![Build Status](https://travis-ci.org/BukkyOmo/swapi-challenge.svg?branch=develop)](https://travis-ci.org/BukkyOmo/swapi-challenge)
 [![Coverage Status](https://coveralls.io/repos/github/BukkyOmo/swapi-challenge/badge.svg?branch=develop)](https://coveralls.io/github/BukkyOmo/swapi-challenge?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7c17e2d704e58d072253/maintainability)](https://codeclimate.com/github/BukkyOmo/swapi-challenge/maintainability)
 
 # Swapi API challenge
 
