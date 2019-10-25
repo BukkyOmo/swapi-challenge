@@ -1,4 +1,5 @@
 [![Heroku](https://img.shields.io/badge/Heroku-🚀-green)](https://mark-my-way.herokuapp.com/)
+[![Build Status](https://travis-ci.org/BukkyOmo/swapi-challenge.svg?branch=develop)](https://travis-ci.org/BukkyOmo/swapi-challenge)
 
 # Swapi API challenge
 
