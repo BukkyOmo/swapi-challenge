@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
-    "test": "npm test",
+    "test": "cross-env NODE_ENV=test nyc mocha --exit --require @babel/register --timeout 600000 ./test/**/*.spec.js",
     "lint": "eslint --ext .js --ext .jsx ."
   },
   "repository": {
@@ -32,6 +32,7 @@
     "express": "^4.17.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.4",
+    "nyc": "^14.1.1",
     "swagger-ui-express": "^4.1.2",
     "yamljs": "^0.3.0"
   },
@@ -39,9 +40,14 @@
     "@babel/core": "^7.6.4",
     "@babel/node": "^7.6.3",
     "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
     "babel-eslint": "^10.0.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cross-env": "^6.0.3",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.2"
   }
 }

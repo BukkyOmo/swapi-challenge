@@ -19,7 +19,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const port = 3000 || process.env.PORT;
 
 app.get('/', (request, response) => {
-  response.send('Hello Swapi');
+  response.status(200).json({
+    message: 'Hello Swapi'
+  });
 });
 
 app.all('*', (request, response) => {
@@ -32,3 +34,5 @@ app.all('*', (request, response) => {
 app.listen(port, () => {
   console.log(`Application running on port ${port}`);
 });
+
+export default app;
