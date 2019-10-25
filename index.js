@@ -19,16 +19,16 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const port = 3000 || process.env.PORT;
 
 app.get('/', (request, response) => {
-    response.send('Hello Swapi')
+  response.send('Hello Swapi');
 });
 
 app.all('*', (request, response) => {
-    response.status(404).json({
-		status: 404,
-		error: 'The route you are trying to access does not exist'
-	});
-})
+  response.status(404).json({
+    status: 404,
+    error: 'The route you are trying to access does not exist',
+  });
+});
 
 app.listen(port, () => {
-    console.log(`Application running on port ${port}`)
+  console.log(`Application running on port ${port}`);
 });
