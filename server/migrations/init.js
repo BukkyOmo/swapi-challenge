@@ -1,6 +1,7 @@
 import User from './users';
 import Comment from './comments';
 import dropAllTables from './drop';
+import ForeignKey from './foreignKeys';
 import logger from '../../config/winston';
 
 // Instatiate DB
@@ -8,6 +9,7 @@ import logger from '../../config/winston';
   await dropAllTables();
   await User();
   await Comment();
+  await ForeignKey();
   logger.debug('###############################################################');
   logger.debug('                   DONE, MIGRATION COMPLETE!                   ');
   logger.debug('###############################################################');
