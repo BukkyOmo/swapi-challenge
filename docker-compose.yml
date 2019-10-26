@@ -1,0 +1,53 @@
+# docker-compose.yml
+version: "3"
+volumes:
+  database_data:
+    external: true
+  redis_data:
+    external: true
+
+services:
+  app:
+    container_name: swapi-container
+    restart: always
+    build: .
+    links:
+      - postgres
+      - redis
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://swapi:pass@postgres:5432/swapi
+      REDIS_URL: redis://redis_cache
+      NODE_ENV: development
+      PORT: 8080
+    command: >
+      ash -c "npm run migrations && npm run serve"
+    ports:
+      - "8000:3000"
+    command: npm run serve
+    volumes:
+      - .:/app/
+      - /app/node_modules
+
+  postgres:
+    container_name: postgres
+    image: postgres:11.5
+    expose:
+      - '5432'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: swapi
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: swapi
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U swapi']
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    container_name: redis
+    image: redis:5.0-alpine
+    container_name: redis_cache
