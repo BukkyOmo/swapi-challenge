@@ -17,6 +17,6 @@
         "sourceType": "module"
     },
     "rules": {
-      "no-console": "off"
+      "no-useless-catch": "off"
     }
 }

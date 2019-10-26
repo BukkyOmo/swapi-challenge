@@ -11,7 +11,8 @@
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-core/register  _mocha --exit test/*.js",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
-    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info"
+    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
+    "migrations": "babel-node ./server/migrations/init.js --"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
     "@babel/node": "^7.6.3",
+    "app-root-path": "^2.2.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -41,7 +43,9 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.19.4",
     "nyc": "^14.1.1",
+    "pg": "^7.12.1",
     "swagger-ui-express": "^4.1.2",
+    "winston": "^3.2.1",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {

@@ -5,11 +5,12 @@ import YAML from 'yamljs';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import logger from './config/winston';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(morgan('dev'));
+app.use(morgan('dev', { stream: logger.stream }));
 app.use(cors());
 dotenv.config();
 
@@ -20,7 +21,7 @@ const port = 3000 || process.env.PORT;
 
 app.get('/', (request, response) => {
   response.status(200).json({
-    message: 'Hello Swapi'
+    message: 'Hello Swapi',
   });
 });
 
@@ -32,7 +33,7 @@ app.all('*', (request, response) => {
 });
 
 app.listen(port, () => {
-  console.log(`Application running on port ${port}`);
+  logger.debug(`Application running on port ${port}`);
 });
 
 export default app;
