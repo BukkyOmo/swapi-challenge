@@ -10,7 +10,7 @@ describe('TEST HOME PAGE ROUTE', () => {
       .get('/')
       .end((error, response) => {
         expect(response.body.message).to.be.equal(
-          'Hello Swapi',
+          'Hello Swapi, Welcome home!',
         );
         done();
       });

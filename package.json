@@ -45,6 +45,7 @@
     "nyc": "^14.1.1",
     "pg": "^7.12.1",
     "swagger-ui-express": "^4.1.2",
+    "validatorjs": "^3.17.1",
     "winston": "^3.2.1",
     "yamljs": "^0.3.0"
   },

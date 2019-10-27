@@ -21,7 +21,7 @@ const port = 3000 || process.env.PORT;
 
 app.get('/', (request, response) => {
   response.status(200).json({
-    message: 'Hello Swapi',
+    message: 'Hello Swapi, Welcome home!',
   });
 });
 
