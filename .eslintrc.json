@@ -17,6 +17,7 @@
         "sourceType": "module"
     },
     "rules": {
-      "no-useless-catch": "off"
+      "no-useless-catch": "off",
+      "no-irregular-whitespace": "off"
     }
 }

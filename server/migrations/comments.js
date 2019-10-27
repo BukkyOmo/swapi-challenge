@@ -11,8 +11,7 @@ const Comment = async () => {
     const query = `CREATE TABLE IF NOT EXISTS comments(
       id SERIAL UNIQUE,
       comment TEXT NOT NULL,
-      latitude VARCHAR(255) NOT NULL,
-      longitude VARCHAR(255) NOT NULL,
+      ip_address VARCHAR(255) NOT NULL,
       user_id INTEGER NOT NULL,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       PRIMARY KEY(id)
