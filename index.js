@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
+import router from './server/routes';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -18,6 +19,8 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const port = 3000 || process.env.PORT;
+
+app.use('/api/v1', router);
 
 app.get('/', (request, response) => {
   response.status(200).json({

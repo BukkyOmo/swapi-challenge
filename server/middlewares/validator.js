@@ -1,9 +1,8 @@
 import Validator from 'validatorjs';
 import { ErrorRxx } from '../helpers/handlers';
 
-const stringValidation = 'regex:/^([a-zA-Z0-9, .-!?@_]+)$/';
+const stringValidation = 'regex:/^([a-zA-Z0-9,.!? @_-]+)$/';
 const nameValidation = 'regex:/^([a-zA-Z ]{3,20})$/';
-const trimValidation = 'regex:/^\s+|\s+$/g';
 
 /**
  * @name UserValidation
@@ -16,16 +15,16 @@ const trimValidation = 'regex:/^\s+|\s+$/g';
  */
 const UserValidation = (request, response, next) => {
   const payload = request.body;
-  let rules = {
-    firstName: ['required', nameValidation, trimValidation, 'string', 'min:3', 'max:20'],
-    lastName: ['required', nameValidation, trimValidation, 'string', 'min:3', 'max:20'],
-    email: ['required', trimValidation, 'email'],
-    password: ['required', stringValidation, trimValidation, 'min:7', 'max:30'],
+   let rules = {
+    firstName: ['required', nameValidation, 'string', 'min:3', 'max:20'],
+    lastName: ['required', nameValidation, 'string', 'min:3', 'max:20'],
+    email: ['required', 'email'],
+    password: ['required', stringValidation, 'min:7', 'max:30'],
   };
   if (request.originalUrl === '/api/v1/auth/signin') {
     rules = {
-      email: ['required', trimValidation, 'email'],
-      password: ['required', stringValidation, trimValidation, 'min:7', 'max:30'],
+      email: ['required', 'email'],
+      password: ['required', stringValidation, 'min:7', 'max:30'],
     };
   }
   const validator = new Validator(payload, rules);
@@ -46,7 +45,7 @@ const UserValidation = (request, response, next) => {
 const CommentValidation = (request, response, next) => {
   const payload = request.body;
   const rules = {
-    comment: ['required', trimValidation, 'string'],
+    comment: ['required', 'string'],
   };
   const validator = new Validator(payload, rules);
   const errors = validator.errors.all();
