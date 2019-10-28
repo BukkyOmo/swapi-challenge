@@ -4,9 +4,12 @@ import UserController from '../controllers/users';
 
 const router = express.Router();
 
-const { signupUser } = UserController;
+const { signupUser, signinUser } = UserController;
 
 router.route('/auth/signup')
-	.post([UserValidation], signupUser);
+  .post([UserValidation], signupUser);
+
+router.route('/auth/signin')
+  .post([UserValidation], signinUser);
 
 export default router;
