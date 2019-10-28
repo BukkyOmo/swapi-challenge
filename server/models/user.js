@@ -12,7 +12,6 @@ class User {
   async createUser(){
     const { firstName, lastName, email, password } = this.payload;
     const values = [firstName, lastName, email, hashPassword(password)];
-
     try {
       const { rows } = await db.query(createUser, values);
       this.result = rows[0];
@@ -26,7 +25,6 @@ class User {
 
   async getUser(){
     const { email } = this.payload;
-
     try {
       const { rows, rowCount } = await db.query(getUser, [email]);
       this.result = rows[0];

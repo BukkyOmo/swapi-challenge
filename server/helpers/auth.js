@@ -11,7 +11,14 @@ const { secret } = process.env;
  * @returns {string} hashedPassword
  */
 const salt = bcrypt.genSaltSync(10);
-const hashPassword = (password) => bcrypt.hashSync(password, salt);
+const hashPassword = password => bcrypt.hashSync(password, salt);
+
+/**
+ * Compare password
+ * @param {string} password
+ * @returns {string} Boolean
+ */
+const comparePassword = (password, hash) => bcrypt.compareSync(password, hash);
 
 /**
  * Gnerate Token
@@ -27,6 +34,6 @@ const encodeToken = (payload) => {
   }
 };
 
-export { hashPassword, encodeToken};
+export { hashPassword, comparePassword, encodeToken};
 
 

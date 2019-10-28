@@ -67,4 +67,31 @@ const User = {
   }
 }
 
-export default User;
+const User2 = {
+  user12: {
+    email: 'bukolaodunayo@gmail.com',
+    password: 'BukolaOdun'
+  },
+  user13: {
+    email: '',
+    password: 'BukolaOdun'
+  },
+  user14: {
+    email: 'bukolaodunayo@gmail.com',
+    password: ''
+  },
+  user15: {
+    email: 'bukolaodun',
+    password: 'BukolaOdun'
+  },
+  user16: {
+    email: 'bukolaodunayo@gmail.com',
+    password: 'opay'
+  },
+  user17: {
+    email: 'bukolaodunayo@gmail.com',
+    password: 'BukolaOdun45'
+  }
+}
+
+export { User, User2 };

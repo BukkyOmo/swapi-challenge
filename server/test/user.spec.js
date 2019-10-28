@@ -1,10 +1,11 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../index';
-import User from '../mocks/user';
+import { User, User2 } from '../mocks/user';
 
 chai.use(chaiHttp);
 const { user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11 } = User;
+const { user12, user13, user14, user15, user16, user17 } = User2;
 
 describe('TEST USER SIGNUP ENDPOINT', () => {
   it('it should sign up a user with valid information', done => {
@@ -138,6 +139,83 @@ describe('TEST USER SIGNUP ENDPOINT', () => {
 				expect(response).to.have.status(400);
         expect(response.body.status).to.be.a('string').and.to.be.equal('failure');
         expect(response.body.error.lastName[0]).to.be.a('string').and.to.be.equal('The lastName format is invalid.');
+				done();
+      });
+  });
+});
+
+describe('TEST USER SIGNIN ENDPOINT', () => {
+  it('it should sign in a user with valid information', done => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(user12)
+      .end((error, response) => {
+				expect(response).to.have.status(200);
+				expect(response.body.status).to.be.a('string');
+				expect(response.body.data).to.be.an('array');
+				expect(response.body.data[0]).to.have.property('token').to.be.a('string');
+				expect(response.body.data[0]).to.have.property('user').to.be.an('object');
+				expect(response.body.data[0].user).to.have.property('email').to.be.a('string');
+        done();
+      });
+  });
+
+  it('it should return error if email is not supplied', done => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(user13)
+      .end((error, response) => {
+				expect(response).to.have.status(400);
+        expect(response.body.status).to.be.a('string').and.to.be.equal('failure');
+        expect(response.body.error.email[0]).to.be.a('string').and.to.be.equal('The email field is required.');
+				done();
+      });
+  });
+
+  it('it should return error if password is not supplied', done => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(user14)
+      .end((error, response) => {
+				expect(response).to.have.status(400);
+        expect(response.body.status).to.be.a('string').and.to.be.equal('failure');
+        expect(response.body.error.password[0]).to.be.a('string').and.to.be.equal('The password field is required.');
+				done();
+      });
+  });
+
+  it('it should return error if email is not a valid email', done => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(user15)
+      .end((error, response) => {
+				expect(response).to.have.status(400);
+        expect(response.body.status).to.be.a('string').and.to.be.equal('failure');
+        expect(response.body.error.email[0]).to.be.a('string').and.to.be.equal('The email format is invalid.');
+				done();
+      });
+  });
+
+  it('it should return error if password is not valid', done => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(user16)
+      .end((error, response) => {
+				expect(response).to.have.status(400);
+        expect(response.body.status).to.be.a('string').and.to.be.equal('failure');
+        expect(response.body.error.password[0]).to.be.a('string').and.to.be.equal('The password must be at least 7 characters.');
+				done();
+      });
+  });
+
+  it('it should return error if the password is incorrect', done => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(user17)
+      .end((error, response) => {
+				expect(response).to.have.status(409);
+        expect(response.body.status).to.be.a('string').and.to.be.equal('failure');
+        expect(response.body.error).to.be.a('string').and.to.be.equal('Incorrect password or email');
 				done();
       });
   });
