@@ -11,7 +11,7 @@ This application uses node js in making http calls to an external API called swa
 
 ## OpenApi Docmentation
 
-> API documentation can be viewed using [Link](https://mark-my-way.herokuapp.com/api-docs/)
+> API documentation can be viewed using [Link]()
 
 ---
 
@@ -40,11 +40,10 @@ This application uses node js in making http calls to an external API called swa
 
 > - User Signup
 > - User Sign in
-> - User can create location so as to view it on the map
-> - User can get a particular location he/she has created
-> - User can get all location he/she has created
-> - User can edit a location
-> - User can delete a location
+> - User can get all movies available with count of comments specified
+> - User can get a particular movie if available
+> - User can post a comment under an available movie
+> - User can get all available characters in a movie, sort them by either name, gender or height and filter by gender.
 
 ---
 
