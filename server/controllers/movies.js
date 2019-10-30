@@ -53,6 +53,39 @@ class MovieController {
           return error;
         }
       }
-}
+
+    /**
+     *@description- An endpoint to get all movies
+     *
+     * @static{object} object
+     * @param {object} request
+     * @param {object} response
+     * returns {object}
+     * @memberof MovieController
+     */
+    static async getAMovie(request, response){
+      const { id } = request.params;
+      const newUrl = `https://swapi.co/api/films/${id}`;
+      try {
+        client.get(id, async (error, result) => {
+            if (result) {
+              return response.status(200).json({
+                status: 200,
+                message: `Successfully retrieved`,
+                data: JSON.parse(result)
+              })
+            }
+            const res = await axios.get(newUrl);
+            const { data } = res;
+            client.setex(id, 3600, JSON.stringify({ source: 'Redis Cache', ...data }));
+            response.status(200).json({
+              data,
+            }) 
+      });
+      } catch (error) {
+        return error;
+      }
+  };
+};
 
 export default MovieController;

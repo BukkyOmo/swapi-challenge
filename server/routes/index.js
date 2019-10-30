@@ -7,7 +7,7 @@ import VerifyToken from '../middlewares/auth';
 const router = express.Router();
 
 const { signupUser, signinUser } = UserController;
-const { getAllMovies } = MovieController;
+const { getAllMovies, getAMovie } = MovieController;
 
 router.route('/auth/signup')
   .post([UserValidation], signupUser);
@@ -17,5 +17,8 @@ router.route('/auth/signin')
 
 router.route('/movies')
   .get([VerifyToken], getAllMovies);
+
+router.route('/movies/:id')
+  .get([VerifyToken], getAMovie);
 
 export default router;

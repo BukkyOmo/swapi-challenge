@@ -23,7 +23,7 @@ const VerifyToken = async (request, response, next) => {
     request.user = rows[0];
     next();
   } catch (error) {
-      return errorRxx(res, 401, 'Invalid Authorization, token invalid!');
+      return ErrorRxx(response, 401, 'failure', 'Invalid Authorization, token invalid!');
   }
 }
 
