@@ -1,10 +1,12 @@
+/* istanbul ignore file */
 import axios from 'axios';
 import redis from 'redis';
+import logger from '../../config/winston';
 
 const client = redis.createClient(6379);
 
 client.on('error', (err) => {
-  console.log("Error " + err);
+  logger.debug("Error " + err);
 });
 
 class MovieController {
@@ -20,33 +22,34 @@ class MovieController {
   static async getAllMovies(request, response){
             try {
         const newUrl = `https://swapi.co/api/films`;
+        let movies = [];
+
         client.get(newUrl, async (error, result) => {
           const data = JSON.parse(result);
           const { results } = data;
           results.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
-          let finalData = results.filter(item => {
-            console.log(item)
-            return {
+          results.forEach(item => {
+            movies.push({
               title: item.title,
-              crawls: item.opening_crawls
-            }
-          })
+              opening_crawl: item.opening_crawl,
+              release_date: item.release_date,
+            })
+          });
           if (result) {
             return response.status(200).json({
               status: 200,
               message: `Successfully retrieved`,
-              finalData,
+              movies,
             })
           }
           const res = await axios.get(newUrl);
           const resultJSON = res.data;
           client.setex(newUrl, 3600, JSON.stringify({ source: 'Redis Cache', ...resultJSON, }));
           response.status(200).json({
-              movies: resultJSON
+              data: resultJSON
             })
         });
         } catch (error) {
-        console.log(error)
           return error;
         }
       }
