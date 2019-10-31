@@ -1,6 +1,5 @@
 import express from 'express';
-import { UserValidation } from '../middlewares/validator';
-import { CommentValidation } from '../middlewares/validator';
+import { UserValidation, CommentValidation, IntegerValidation} from '../middlewares/validator';
 import UserController from '../controllers/users';
 import MovieController from '../controllers/movies';
 import CommentController from '../controllers/comments';
@@ -10,7 +9,7 @@ const router = express.Router();
 
 const { signupUser, signinUser } = UserController;
 const { getAllMovies, getAMovie } = MovieController;
-const { createComment } = CommentController;
+const { createComment, getCommentByMovie } = CommentController;
 
 router.route('/auth/signup')
   .post([UserValidation], signupUser);
@@ -26,5 +25,8 @@ router.route('/movies/:id')
 
 router.route('/comments')
   .post([VerifyToken, CommentValidation], createComment);
+
+router.route('/comments/:id')
+  .get([VerifyToken, IntegerValidation], getCommentByMovie);
 
 export default router;

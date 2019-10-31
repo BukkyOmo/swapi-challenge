@@ -1,10 +1,11 @@
 import db from '../../config/database';
-import { createComment } from './index';
+import { createComment, getCommentByMovie } from './index';
 
 class CommentModel{
     constructor(payload = null){
         this.payload = payload;
         this.result = null;
+        this.count = null;
         this.error = null
     }
 
@@ -19,6 +20,19 @@ class CommentModel{
         } catch (error) {
             this.error = error.stack;
             return false;
+        }
+    }
+
+    async getCommentByMovie() {
+        const { id } = this.payload;
+        const values = [id];
+        try {
+            const { rows, rowCount } = await db.query(getCommentByMovie, values);
+            this.result = rows;
+            this.count = rowCount;
+            return true;
+        } catch (error) {
+            this.error = error.stack;
         }
     }
 }
