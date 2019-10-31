@@ -1,13 +1,9 @@
 /* istanbul ignore file */
 import axios from 'axios';
-import redis from 'redis';
-import logger from '../../config/winston';
+import { ErrorRxx, Response2xx, Response4xx } from '../helpers/handlers';
+import CacheStorage from '../cache';
 
-const client = redis.createClient(6379);
-
-client.on('error', (err) => {
-  logger.debug("Error " + err);
-});
+const newUrl = `https://swapi.co/api/films`;
 
 class MovieController {
     /**
@@ -21,34 +17,23 @@ class MovieController {
      */
   static async getAllMovies(request, response){
             try {
-        const newUrl = `https://swapi.co/api/films`;
-        let movies = [];
+        const movies = [];
+        const movieRedisKey = 'all';
+        const value =  await CacheStorage.fetch(movieRedisKey);
 
-        client.get(newUrl, async (error, result) => {
-          const data = JSON.parse(result);
-          const { results } = data;
-          results.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
-          results.forEach(item => {
+        if(value) return Response2xx(response, 200, 'Success', 'Movies successfully retrieved from Cache', value);
+        const result = await axios.get(newUrl);
+        const { data: { results } } = result;
+        results.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+        results.forEach(item => {
             movies.push({
               title: item.title,
               opening_crawl: item.opening_crawl,
               release_date: item.release_date,
             })
-          });
-          if (result) {
-            return response.status(200).json({
-              status: 200,
-              message: `Successfully retrieved`,
-              movies,
-            })
-          }
-          const res = await axios.get(newUrl);
-          const resultJSON = res.data;
-          client.setex(newUrl, 3600, JSON.stringify({ source: 'Redis Cache', ...resultJSON, }));
-          response.status(200).json({
-              data: resultJSON
-            })
         });
+        await CacheStorage.save(movieRedisKey, movies);
+        return Response2xx(response, 200, 'success', 'Movies successfully retrieved', movies);
         } catch (error) {
           return error;
         }
@@ -65,23 +50,14 @@ class MovieController {
      */
     static async getAMovie(request, response){
       const { id } = request.params;
-      const newUrl = `https://swapi.co/api/films/${id}`;
       try {
-        client.get(id, async (error, result) => {
-            if (result) {
-              return response.status(200).json({
-                status: 200,
-                message: `Successfully retrieved`,
-                data: JSON.parse(result)
-              })
-            }
-            const res = await axios.get(newUrl);
-            const { data } = res;
-            client.setex(id, 3600, JSON.stringify({ source: 'Redis Cache', ...data }));
-            response.status(200).json({
-              data,
-            }) 
-      });
+       const value =  await CacheStorage.fetch(id);
+       if(value) Response2xx(response, 200, 'Success', 'Successfully retrieved', value);
+
+       const result = await axios.get(`${newUrl}/${id}`);
+       const { data } = result;
+       await CacheStorage.save(id, data);
+       return Response2xx(response, 200, 'Success', 'Successfully retrieved', data);
       } catch (error) {
         return error;
       }
