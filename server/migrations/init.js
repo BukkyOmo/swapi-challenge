@@ -4,7 +4,7 @@ import dropAllTables from './drop';
 import ForeignKey from './foreignKeys';
 import logger from '../../config/winston';
 
-// Instatiate DB
+// Instatiate Database
 (async () => {
   await dropAllTables();
   await User();

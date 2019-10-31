@@ -8,7 +8,8 @@ import db from '../../config/database';
 const ForeignKey = async () => {
   const client = await db.connect();
   try {
-    const query = `ALTER TABLE comments ADD FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;`;
+    const query = `ALTER TABLE comments 
+    ADD FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;`;
     await client.query(query);
   } catch (error) {
     throw error;

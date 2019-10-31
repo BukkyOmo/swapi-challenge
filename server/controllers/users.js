@@ -33,7 +33,7 @@ class UserController {
 	 */
   static async signinUser(request, response){
     const existingUser = new UserModel(request.body);
-    if(await existingUser.getUser() && existingUser.rowCount === 0) return ErrorRxx(response, 404, 'failure', 'please register');
+    if(await existingUser.getUser() && existingUser.rowCount === 0) return ErrorRxx(response, 404, 'failure', 'You are not currently registered, please register');
     const user = existingUser.result;
     const confirmPassword = comparePassword(request.body.password, user.password);
     if(!confirmPassword) return ErrorRxx(response, 409, 'failure', 'Incorrect password or email')
