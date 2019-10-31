@@ -24,11 +24,11 @@ class MovieController {
         if(value) return Response2xx(response, 200, 'Success', 'Movies successfully retrieved from Cache', value);
         const result = await axios.get(newUrl);
         const { data: { results } } = result;
-        results.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+        results.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
         results.forEach(item => {
             movies.push({
               title: item.title,
-              opening_crawl: item.opening_crawl,
+              opening_crawls: item.opening_crawl,
               release_date: item.release_date,
             })
         });
