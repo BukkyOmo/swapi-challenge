@@ -45,7 +45,7 @@ const UserValidation = (request, response, next) => {
 const CommentValidation = (request, response, next) => {
   const payload = request.body;
   const rules = {
-    comment: ['required', 'string'],
+    comment: ['required', 'string', 'max:500'],
   };
   const validator = new Validator(payload, rules);
   const errors = validator.errors.all();

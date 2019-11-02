@@ -27,7 +27,7 @@ const comparePassword = (password, hash) => bcrypt.compareSync(password, hash);
  */
 const encodeToken = (payload) => {
   try{
-    const token = jwt.sign(payload, secret, {expiresIn: '2d'});
+    const token = jwt.sign(payload, secret, {expiresIn: '1d'});
     return token;
   } catch (error) {
     return error;
