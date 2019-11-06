@@ -10,11 +10,10 @@ class CommentModel{
     }
 
     async createComment() {
-        const { comment, movie_id, id, ip } = this.payload;
-        const values = [comment, parseInt(movie_id), id, ip];
-
+        const { comment, movie_id, ip } = this.payload;
+        const values = [comment, parseInt(movie_id), ip];
         try {
-            const { rows } = await db.query(createComment, values); 
+            const { rows } = await db.query(createComment, values);
             this.result = rows[0];
             return true;
         } catch (error) {

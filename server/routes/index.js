@@ -1,32 +1,28 @@
 import express from 'express';
-import { UserValidation, CommentValidation, IntegerValidation} from '../middlewares/validator';
-import UserController from '../controllers/users';
+import {CommentValidation, IntegerValidation} from '../middlewares/validator';
 import MovieController from '../controllers/movies';
 import CommentController from '../controllers/comments';
-import VerifyToken from '../middlewares/auth';
+import CharacterController from '../controllers/characters';
 
 const router = express.Router();
 
-const { signupUser, signinUser } = UserController;
 const { getAllMovies, getAMovie } = MovieController;
 const { createComment, getCommentByMovie } = CommentController;
-
-router.route('/auth/signup')
-  .post([UserValidation], signupUser);
-
-router.route('/auth/signin')
-  .post([UserValidation], signinUser);
+const { getCharacters } = CharacterController;
 
 router.route('/movies')
-  .get([VerifyToken], getAllMovies);
+  .get(getAllMovies);
 
 router.route('/movies/:id')
-  .get([VerifyToken], getAMovie);
+  .get([IntegerValidation], getAMovie);
 
 router.route('/comments')
-  .post([VerifyToken, CommentValidation], createComment);
+  .post([CommentValidation], createComment);
 
 router.route('/comments/:id')
-  .get([VerifyToken, IntegerValidation], getCommentByMovie);
+  .get([IntegerValidation], getCommentByMovie);
+
+router.route('/characters')
+  .get(getCharacters);
 
 export default router;

@@ -1,4 +1,4 @@
-[![Heroku](https://img.shields.io/badge/Heroku-🚀-green)](https://mark-my-way.herokuapp.com/)
+[![Heroku](https://img.shields.io/badge/Heroku-🚀-green)](https://swapi-lite.herokuapp.com/)
 [![Build Status](https://travis-ci.org/BukkyOmo/swapi-challenge.svg?branch=develop)](https://travis-ci.org/BukkyOmo/swapi-challenge)
 [![Coverage Status](https://coveralls.io/repos/github/BukkyOmo/swapi-challenge/badge.svg?branch=develop)](https://coveralls.io/github/BukkyOmo/swapi-challenge?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7c17e2d704e58d072253/maintainability)](https://codeclimate.com/github/BukkyOmo/swapi-challenge/maintainability)
@@ -26,23 +26,16 @@ This application uses node js in making http calls to an external API called swa
 
 ## Database
 
-- [POSTGRESQL](https://www.postgresql.org/) (postgresql)
-
----
-
-## Authentication
-
-> This API is protected using [JWT](http://jwt.io) Authentication
+- [Postgres](https://www.postgresql.org/) (postgresql)
 
 ---
 
 ## Features
 
-> - User Signup
-> - User Sign in
-> - User can get all movies available with count of comments specified
+> - User can get all movies available
 > - User can get a particular movie if available
-> - User can post a comment under an available movie
+> - User can post a comment under a movie
+> - User can get all comments posted under a movie
 > - User can get all available characters in a movie, sort them by either name, gender or height and filter by gender.
 
 ---
