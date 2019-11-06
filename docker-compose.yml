@@ -18,7 +18,7 @@ services:
       - postgres
     environment:
       DATABASE_URL: postgres://swapi:pass@postgres:5432/swapi
-      REDIS_URL: redis://redis_cache
+      REDIS_URL: redis://redis_cache:6379
       NODE_ENV: development
       PORT: 8080
     command: >

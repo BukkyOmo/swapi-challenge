@@ -1,4 +1,4 @@
-import { ErrorRxx, Response2xx, Response4xx } from '../helpers/handlers';
+import { ErrorRxx, Response2xx } from '../helpers/handlers';
 import CommentModel from '../models/comment';
 
 class CommentsController {
@@ -13,9 +13,8 @@ class CommentsController {
      */
     static async createComment(request, response) {
         const { comment, movie_id } = request.body;
-        const { id } = request.user;
         const { ip } = request;
-        const commentQuery = new CommentModel({comment, movie_id, id, ip});
+        const commentQuery = new CommentModel({comment, movie_id, ip});
         if(!await commentQuery.createComment()) return ErrorRxx(response, 500, 'failure', 'Unable to save comment in database, please try again');
         return Response2xx(response, 201, 'success', 'Comment successfully saved', commentQuery.result);
     }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import CacheStorage from '../cache';
-import { ErrorRxx, Response2xx, Response4xx } from './../helpers/handlers';
+import CharacterHelper from '../helpers/characterHelper'
+import { ErrorRxx, Response2xx } from './../helpers/handlers';
 
 class CharacterController{
         /**
@@ -17,11 +18,14 @@ class CharacterController{
             const url = 'https://swapi.co/api/people';
             const characterRedisKey = 'characters';
             const characters = await CacheStorage.fetch(characterRedisKey);
-            if(characters) return Response2xx(response, 200, 'Success', 'Characters successfully retrieved from cache', characters);  
+            if(characters) return Response2xx(response, 200, 'Success', 'Characters successfully retrieved from cache', characters);
             const result = await axios.get(url);
             const { data } = result;
-            await CacheStorage.save(characterRedisKey, data)
-            return Response2xx(response, 200, 'success', 'Characters successfully retrieved', data);
+            const { results } = data;
+            const newHelper = new CharacterHelper(request);
+            const values = await newHelper.sortFunction(results);
+            await CacheStorage.save(characterRedisKey, values);
+            return Response2xx(response, 200, 'success', 'Characters successfully retrieved', values);
         } catch (error) {
             return error;
         }

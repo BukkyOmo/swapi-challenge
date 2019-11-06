@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import axios from 'axios';
-import { ErrorRxx, Response2xx, Response4xx } from '../helpers/handlers';
+import { ErrorRxx, Response2xx } from '../helpers/handlers';
 import CacheStorage from '../cache';
-import MovieHelper from '../helpers/helpers';
+import MovieHelper from '../helpers/movieHelper';
 
 const { getAllMovies } = MovieHelper;
 

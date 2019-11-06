@@ -30,16 +30,8 @@ This application uses node js in making http calls to an external API called swa
 
 ---
 
-## Authentication
-
-> This API is protected using [JWT](http://jwt.io) Authentication
-
----
-
 ## Features
 
-> - User Signup
-> - User Sign in
 > - User can get all movies available
 > - User can get a particular movie if available
 > - User can post a comment under a movie
