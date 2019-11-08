@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 class MovieHelper{
     static async getAllMovies(values){
         const movies = [];

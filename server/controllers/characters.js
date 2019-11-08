@@ -16,15 +16,11 @@ class CharacterController{
     static async getCharacters(request, response) {
         try {          
             const url = 'https://swapi.co/api/people';
-            const characterRedisKey = 'characters';
-            const characters = await CacheStorage.fetch(characterRedisKey);
-            if(characters) return Response2xx(response, 200, 'Success', 'Characters successfully retrieved from cache', characters);
             const result = await axios.get(url);
             const { data } = result;
             const { results } = data;
             const newHelper = new CharacterHelper(request);
             const values = await newHelper.sortFunction(results);
-            await CacheStorage.save(characterRedisKey, values);
             return Response2xx(response, 200, 'success', 'Characters successfully retrieved', values);
         } catch (error) {
             return error;
