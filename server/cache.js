@@ -1,16 +1,17 @@
+/* istanbul ignore file */
 import redis from 'redis';
 import{ promisify } from 'util';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const { REDIS_URL } = process.env;
+const { REDIS_URL_DEV } = process.env;
 
 export default new class CacheStorage {
     constructor(){
         if(CacheStorage.exists){
             return CacheStorage.instance;
         }
-        this.client = redis.createClient(REDIS_URL);
+        this.client = redis.createClient(REDIS_URL_DEV);
         this.client.getAsync = promisify(this.client.get)
         this.client.setAsync = promisify(this.client.set)        
         this.client.setexAsync = promisify(this.client.setex)

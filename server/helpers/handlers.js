@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * Returns an error response
  * @name ErrorRxx

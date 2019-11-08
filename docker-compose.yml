@@ -8,17 +8,19 @@ volumes:
 
 services:
   app:
-    container_name: swapi-container
+    container_name: swapi-app
     restart: always
     build: .
     links:
       - postgres
       - redis
+    env_file:
+      - .env
     depends_on:
       - postgres
     environment:
       DATABASE_URL: postgres://swapi:pass@postgres:5432/swapi
-      REDIS_URL: redis://redis_cache:6379
+      REDIS_URL: redis://swapi_redis
       NODE_ENV: development
       PORT: 8080
     command: >
@@ -38,7 +40,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: swapi
+      POSTGRES_USER: swapi_db
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: swapi
     healthcheck:
@@ -48,6 +50,5 @@ services:
       retries: 5
 
   redis:
-    container_name: redis
+    container_name: swapi_redis
     image: redis:5.0-alpine
-    container_name: redis_cache

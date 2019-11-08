@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 class CharacterHelper{
     constructor(payload){
         this.payload = payload;

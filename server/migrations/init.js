@@ -10,5 +10,5 @@ import logger from '../../config/winston';
   logger.debug('                   DONE, MIGRATION COMPLETE!                   ');
   logger.debug('###############################################################');
 })().catch((err) => {
-  console.log(err);
+  logger.debug(err);
 });
