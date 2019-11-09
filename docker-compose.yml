@@ -18,11 +18,12 @@ services:
       - .env
     depends_on:
       - postgres
+      - redis
     environment:
-      DATABASE_URL: postgres://swapi:pass@postgres:5432/swapi
+      DATABASE_URL: postgres://wqopvhiv:j_rXyLzWCFjHV_IsUbgfU6ReWjdXu1Sl@salt.db.elephantsql.com:5432/wqopvhiv
       REDIS_URL: redis://swapi_redis
       NODE_ENV: development
-      PORT: 8080
+      PORT: 3000
     command: >
       ash -c "npm run migrations && npm run serve"
     ports:
@@ -40,15 +41,19 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: swapi_db
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: swapi
+      POSTGRES_USER: wqopvhiv
+      POSTGRES_PASSWORD: j_rXyLzWCFjHV_IsUbgfU6ReWjdXu1Sl
+      POSTGRES_DB: wqopvhiv
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U swapi']
+      test: ['CMD-SHELL', 'pg_isready -U wqopvhiv']
       interval: 5s
       timeout: 10s
       retries: 5
 
   redis:
     container_name: swapi_redis
-    image: redis:5.0-alpine
+    image: redis:latest
+    command: ["redis-server", "--bind", "redis", "--port", "6379"]
+    expose:
+      - 6379
+
