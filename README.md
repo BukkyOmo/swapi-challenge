@@ -9,6 +9,12 @@ This application uses node js in making http calls to an external API called swa
 
 ---
 
+# Project management
+
+This application uses pivotal tracker to schedule and arrange the tasks to be carried out. [Link](https://www.pivotaltracker.com/n/projects/2408531)
+
+---
+
 ## OpenApi Docmentation
 
 > API documentation can be viewed using [Link]()
