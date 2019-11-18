@@ -18,7 +18,7 @@ dotenv.config();
 const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 
 app.use('/api/v1', router);
 
