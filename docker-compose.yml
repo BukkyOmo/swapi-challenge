@@ -44,6 +44,7 @@ services:
       POSTGRES_USER: wqopvhiv
       POSTGRES_PASSWORD: j_rXyLzWCFjHV_IsUbgfU6ReWjdXu1Sl
       POSTGRES_DB: wqopvhiv
+      POSTGRES_DB_HOST: salt.db.elephantsql.com
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U wqopvhiv']
       interval: 5s
