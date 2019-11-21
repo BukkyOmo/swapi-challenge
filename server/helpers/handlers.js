@@ -22,7 +22,7 @@ const ErrorRxx = (response, code, status, error) => response.status(code).json({
 const Response2xx = (response, code, status, message, data) => {
   let responseBody = { status, message, data };
   if (!message) responseBody = { status, data };
-  if (typeof data !== 'string' && !data.isArray) responseBody.data = [data];
+  if (typeof data !== 'string') responseBody.data = data;
   response.status(code).json(responseBody);
 };
 

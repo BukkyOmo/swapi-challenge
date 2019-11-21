@@ -1,5 +1,9 @@
 import Validator from 'validatorjs';
 import { ErrorRxx } from '../helpers/handlers';
+import CacheStorage from '../cache';
+import axios from 'axios';
+
+const newUrl = `https://swapi.co/api/films`;
 
 /**
  * @name CommentValidation
@@ -14,6 +18,7 @@ const CommentValidation = (request, response, next) => {
   const payload = request.body;
   const rules = {
     comment: ['required', 'string', 'max:500'],
+    episode_id: ['required', 'integer']
   };
   const validator = new Validator(payload, rules);
   const errors = validator.errors.all();
@@ -43,6 +48,44 @@ const IntegerValidation = (request, response, next) => {
   return next();
 };
 
+/**
+ * @name MovieValidation
+ * @param {object} req
+ * @param {object} res
+ * @returns {function} next
+ * @returns {function} next
+ * @returns {object} error
+ * @description Validates Movie id Param in request fields
+ */
+const ValidateMovie = async (request, response, next) => {
+  try {
+    const { episode_id } = request.body;
+    const { data } = await axios.get(`${newUrl}/${episode_id}`);
+    if(data) return next()
+  } catch (error) {
+    return ErrorRxx(response, 404, 'Failure', 'The movie you try to comment on does not exist')
+  }
+}
+
+/**
+ * @name MovieValidation
+ * @param {object} req
+ * @param {object} res
+ * @returns {function} next
+ * @returns {function} next
+ * @returns {object} error
+ * @description Validates Movie id Param in request fields
+ */
+const ValidateMovieCharacters = async (request, response, next) => {
+  try {
+    const { id } = request.params;
+    const { data } = await axios.get(`${newUrl}/${id}`);
+    if(data) return next()
+  } catch (error) {
+    return ErrorRxx(response, 404, 'Failure', 'The movie you try to get characters for does not exist')
+  }
+}
+
 export {
-  CommentValidation, IntegerValidation,
+  CommentValidation, IntegerValidation, ValidateMovie, ValidateMovieCharacters
 };

@@ -1,5 +1,5 @@
 import { ErrorRxx, Response2xx } from '../helpers/handlers';
-import CommentModel from '../models/comment';
+import CommentService from '../services/comments';
 
 class CommentsController {
     /**
@@ -12,11 +12,15 @@ class CommentsController {
      * @memberof CommentsController
      */
     static async createComment(request, response) {
-        const { comment, movie_id } = request.body;
-        const { ip } = request;
-        const commentQuery = new CommentModel({comment, movie_id, ip});
-        if(!await commentQuery.createComment()) return ErrorRxx(response, 500, 'failure', 'Unable to save comment in database, please try again');
-        return Response2xx(response, 201, 'success', 'Comment successfully saved', commentQuery.result);
+        const { comment, episode_id } = request.body;
+        try {
+            const { ip } = request;
+            const commentQuery = new CommentService({comment, episode_id, ip});
+            if(!await commentQuery.createComment()) return ErrorRxx(response, 500, 'failure', 'Unable to save comment in database, please try again');
+            return Response2xx(response, 201, 'success', 'Comment successfully saved', commentQuery.result);
+        } catch (error) {
+            return error;
+        }
     }
 
     /**
@@ -29,7 +33,7 @@ class CommentsController {
      * @memberof CommentsController
      */
     static async getCommentByMovie(request, response) {
-        const newQuery = new CommentModel(request.params);
+        const newQuery = new CommentService(request.params);
         if(await newQuery.getCommentByMovie() && newQuery.count === 0) return ErrorRxx(response, 404, 'Failure', 'There are no comments for this movie yet');
         if(!await newQuery.getCommentByMovie()) return ErrorRxx(response, 500, 'failure', 'Unable to get comment from database, please try again'); 
         const data = newQuery.result;

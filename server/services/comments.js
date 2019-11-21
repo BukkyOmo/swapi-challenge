@@ -1,7 +1,7 @@
 import db from '../../config/database';
-import { createComment, getCommentByMovie } from './index';
+import { createComment, getCommentByMovie } from '../queries/index';
 
-class CommentModel{
+class CommentService{
     constructor(payload = null){
         this.payload = payload;
         this.result = null;
@@ -10,8 +10,8 @@ class CommentModel{
     }
 
     async createComment() {
-        const { comment, movie_id, ip } = this.payload;
-        const values = [comment, parseInt(movie_id), ip];
+        const { comment, episode_id, ip } = this.payload;
+        const values = [comment, parseInt(episode_id), ip];
         try {
             const { rows } = await db.query(createComment, values);
             this.result = rows[0];
@@ -36,4 +36,4 @@ class CommentModel{
     }
 }
 
-export default CommentModel;
+export default CommentService;
