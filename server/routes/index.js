@@ -1,28 +1,21 @@
 import express from 'express';
-import {CommentValidation, IntegerValidation} from '../middlewares/validator';
+import { CommentValidation, IntegerValidation, ValidateMovie, ValidateMovieCharacters } from '../middlewares/validator';
 import MovieController from '../controllers/movies';
 import CommentController from '../controllers/comments';
 import CharacterController from '../controllers/characters';
 
 const router = express.Router();
 
-const { getAllMovies, getAMovie } = MovieController;
-const { createComment, getCommentByMovie } = CommentController;
-const { getCharacters } = CharacterController;
-
 router.route('/movies')
-  .get(getAllMovies);
-
-router.route('/movies/:id')
-  .get([IntegerValidation], getAMovie);
+  .get(MovieController.getAllMovies);
 
 router.route('/comments')
-  .post([CommentValidation], createComment);
+  .post([CommentValidation, ValidateMovie], CommentController.createComment);
 
 router.route('/comments/:id')
-  .get([IntegerValidation], getCommentByMovie);
+  .get([IntegerValidation], CommentController.getCommentByMovie);
 
-router.route('/characters')
-  .get(getCharacters);
+router.route('/movies/:id/characters')
+  .get([IntegerValidation, ValidateMovieCharacters], CharacterController.getCharactersByMovie);
 
 export default router;

@@ -1,11 +1,11 @@
 import axios from 'axios';
-import CacheStorage from '../cache';
 import CharacterHelper from '../helpers/characterHelper'
-import { ErrorRxx, Response2xx } from './../helpers/handlers';
+import { Response2xx } from './../helpers/handlers';
+import CacheStorage from '../cache';
 
 class CharacterController{
         /**
-     *@description- An endpoint to get all characters
+     *@description- An endpoint to get all characters from a specific movie
      *
      * @static{object} object
      * @param {object} request
@@ -13,19 +13,33 @@ class CharacterController{
      * returns {object}
      * @memberof CharacterController
      */
-    static async getCharacters(request, response) {
-        try {          
-            const url = 'https://swapi.co/api/people';
-            const result = await axios.get(url);
-            const { data } = result;
-            const { results } = data;
-            const newHelper = new CharacterHelper(request);
-            const values = await newHelper.sortFunction(results);
-            return Response2xx(response, 200, 'success', 'Characters successfully retrieved', values);
+
+    static async getCharactersByMovie(request, response){
+        const { id } = request.params;
+        const { query } = request;
+        try {  
+            const charactersRedisKey = id;
+            const value =  await CacheStorage.fetch(charactersRedisKey);
+
+            if(value) {
+                const cachedResult = await CharacterHelper.calcAndFilterValues(value, query);
+                return Response2xx(response, 200, 'Success', 'Movies characters successfully retrieved', cachedResult);       
+            }
+            
+            const url = 'https://swapi.co/api/films';
+            const result = await axios.get(`${url}/${id}`);
+            const { data: { characters } } = result;
+            const allCharacters = characters.map(async characterUrl => (await axios.get(characterUrl)).data);
+            const resultCharacters = await Promise.all(allCharacters);
+
+            await CacheStorage.save(charactersRedisKey, resultCharacters);
+            const Result = await CharacterHelper.calcAndFilterValues(resultCharacters, query);          
+            if(result) return Response2xx(response, 200, 'Success', 'Movie characters successfully retrieved', Result);
         } catch (error) {
-            return error;
+           return error; 
         }
     }
 }
 
 export default CharacterController;
+

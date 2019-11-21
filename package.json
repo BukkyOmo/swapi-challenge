@@ -6,14 +6,15 @@
   "scripts": {
     "start": "babel-node index.js",
     "serve": "nodemon --exec babel-node index.js",
-    "pretest": "cross-env NODE_ENV=test npm run migrations",
+    "pretest": "cross-env NODE_ENV=test npm run migrations-down && npm run migrations-up",
     "test": "cross-env NODE_ENV=test nyc mocha --exit --require @babel/register --require @babel/polyfill --timeout 600000 server/./test/**/*.spec.js",
     "lint": "eslint --ext .js --ext .jsx .",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-core/register  _mocha --exit test/*.js",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
     "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
-    "migrations": "babel-node ./server/migrations/init.js --"
+    "migrations-down": "db-migrate down",
+    "migrations-up": "db-migrate up"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,8 @@
     "babel-preset-es2015": "^6.24.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "db-migrate": "^0.11.6",
+    "db-migrate-pg": "^1.0.0",
     "dotenv": "^8.2.0",
     "editorconfig": "^0.15.3",
     "express": "^4.17.1",
