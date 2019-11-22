@@ -1,6 +1,5 @@
 import Validator from 'validatorjs';
 import { ErrorRxx } from '../helpers/handlers';
-import CacheStorage from '../cache';
 import axios from 'axios';
 
 const newUrl = `https://swapi.co/api/films`;
@@ -60,7 +59,7 @@ const IntegerValidation = (request, response, next) => {
 const ValidateMovie = async (request, response, next) => {
   try {
     const { episode_id } = request.body;
-    const { data } = await axios.get(`${newUrl}/${episode_id}`);
+    const  { data } = await axios.get(`${newUrl}/${episode_id}`);
     if(data) return next()
   } catch (error) {
     return ErrorRxx(response, 404, 'Failure', 'The movie you try to comment on does not exist')

@@ -35,8 +35,10 @@ app.all('*', (request, response) => {
   });
 });
 
+if(!module.parent) {
 app.listen(port, () => {
   logger.debug(`Application running on port ${port}`);
-});
+})
+};
 
 export default app;
