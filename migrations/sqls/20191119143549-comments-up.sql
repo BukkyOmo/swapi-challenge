@@ -1,5 +1,5 @@
 CREATE TABLE comments(
-    id SERIAL PRIMARY KEY,
+    id SERIAL,
     comment TEXT NOT NULL,
     episode_id INTEGER NOT NULL,
     ip_address VARCHAR(255) NOT NULL,

@@ -16,7 +16,9 @@ class CommentsController {
         try {
             const { ip } = request;
             const commentQuery = new CommentService({comment, episode_id, ip});
-            if(!await commentQuery.createComment()) return ErrorRxx(response, 500, 'failure', 'Unable to save comment in database, please try again');
+            const isSaved = await commentQuery.createComment()
+            
+            if(!isSaved) return ErrorRxx(response, 500, 'failure', 'Unable to save comment in database, please try again');
             return Response2xx(response, 201, 'success', 'Comment successfully saved', commentQuery.result);
         } catch (error) {
             return error;
