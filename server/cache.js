@@ -37,8 +37,8 @@ export default new class CacheStorage {
     }
 
     saveObject(key, value){
-        const minutes = 5;
-        const maxCacheAge = 1000 * 60 * minutes;
+        const minutes = 1;
+        const maxCacheAge = 60 * 60 * minutes;
         return this.client.setexAsync(key, maxCacheAge, JSON.stringify(value));
     }
 

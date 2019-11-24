@@ -1,6 +1,6 @@
 import axios from 'axios';
 import CharacterHelper from '../helpers/characterHelper'
-import { Response2xx } from './../helpers/handlers';
+import { ErrorRxx, Response2xx } from './../helpers/handlers';
 import CacheStorage from '../cache';
 
 class CharacterController{
@@ -21,8 +21,9 @@ class CharacterController{
             const charactersRedisKey = id;
             const value =  await CacheStorage.fetch(charactersRedisKey);
 
-            if(value) {
+            if (value) {
                 const cachedResult = await CharacterHelper.calcAndFilterValues(value, query);
+                if(!cachedResult.results.length) return ErrorRxx(response, 404, 'Failure', 'There are no characters with these qualities in this movie')    
                 return Response2xx(response, 200, 'Success', 'Movies characters successfully retrieved', cachedResult);       
             }
             
@@ -33,8 +34,9 @@ class CharacterController{
             const resultCharacters = await Promise.all(allCharacters);
 
             await CacheStorage.save(charactersRedisKey, resultCharacters);
-            const Result = await CharacterHelper.calcAndFilterValues(resultCharacters, query);          
-            if(result) return Response2xx(response, 200, 'Success', 'Movie characters successfully retrieved', Result);
+            const Result = await CharacterHelper.calcAndFilterValues(resultCharacters, query);  
+            if (!Result.results.length) return ErrorRxx(response, 404, 'Failure', 'There are no characters with these qualities in this movie')    
+            return Response2xx(response, 200, 'Success', 'Movie characters successfully retrieved', Result);
         } catch (error) {
            return error; 
         }

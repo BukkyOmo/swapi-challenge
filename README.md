@@ -5,7 +5,7 @@
 
 # Swapi API challenge
 
-This application uses node js in making http calls to an external API called swapi.com
+This application uses node js in making http calls to an external API called swapi.com whilst also saving user comments in database.
 
 ---
 
@@ -26,7 +26,8 @@ This application uses pivotal tracker to schedule and arrange the tasks to be ca
 - Node JS
 - Express
 - Mocha and Chai
-- Swagger
+- Redis
+- Postman
 
 ---
 
@@ -81,7 +82,13 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
   After installing node, this project will need yarn too, so just run the following command.
 
       $ npm install -g yarn
+---
 
+## Configure app
+
+create a  `.env` file then add url to your db.
+
+- DATABASE_URL
 ---
 
 ## Setup and Development
@@ -93,25 +100,18 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
 ---
 
-## Configure app
+## Setup and run docker
 
-create a  `.env` file then add url to your db.
-
-- DATABASE_URL;
-
-
----
-
-## Running the project
-
-    $ npm run serve
+- Ensure you have docker installed on your computer.
+- Build an image and run it as one containe by running `docker build .`
+- Run `docker-compose up`
+- To stop docker from running run `docker-compose down`
 
 ---
     
 ## Running migrations
     First install db-migrate globally and db-mihgrate-pg locally
-    $ npm run migrations-up 
-    $ npm run migrations-down
+    $ npm run migrations-up:dev 
 
 ---
 

@@ -21,8 +21,8 @@ class MovieController {
   static async getAllMovies(request, response){
         try {
             const movieRedisKey = 'all';
-            const value =  await CacheStorage.fetch(movieRedisKey);
-            if(value) return Response2xx(response, 200, 'Success', 'Movies successfully retrieved', value);
+            const values =  await CacheStorage.fetch(movieRedisKey);
+            if(values) return Response2xx(response, 200, 'Success', 'Movies successfully retrieved', values);
             const result = await axios.get(newUrl);
             const { data: { results } } = result;
             const movies = await getMoviesHelper(results);
