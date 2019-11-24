@@ -26,6 +26,8 @@ class CharacterHelper{
                     return item.gender === 'male';
                 case 'hermaphrodite':
                     return item.gender === 'hermaphrodite';
+                case 'none':
+                    return item.gender === 'none';
                 case 'n/a':
                     return item.gender === 'n/a';
                 default:
