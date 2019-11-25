@@ -42,8 +42,9 @@ class CommentsController {
         try {          
             if(await newQuery.getCommentByMovie() && newQuery.count === 0) return ErrorRxx(response, 404, 'Failure', 'There are no comments for this movie yet');
             if(!await newQuery.getCommentByMovie()) return ErrorRxx(response, 500, 'Failure', 'Unable to get comment from database, please try again'); 
-            const data = newQuery.result;
-            data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            const { result } = newQuery;
+            result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            const data = {count: result.length, result}
             return Response2xx(response, 200, 'Success', 'Comment retrieved succcessfully', data);
         } catch (error) {
             return error;
