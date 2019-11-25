@@ -1,6 +1,6 @@
 const Comment = {
     comment1: {
-        comment: "Hello swapi, how are you doing",
+        comment: "Hello swapi, how are you doing hope all is well",
         episode_id: 5
     },
     comment2: {

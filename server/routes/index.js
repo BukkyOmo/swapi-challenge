@@ -1,5 +1,5 @@
 import express from 'express';
-import { CommentValidation, IntegerValidation, ValidateMovie, ValidateMovieCharacters } from '../middlewares/validator';
+import { CommentValidation, IntegerValidation, ValidateMovieInBody, ValidateMovieCharacters, ValidateMovieParams } from '../middlewares/validator';
 import MovieController from '../controllers/movies';
 import CommentController from '../controllers/comments';
 import CharacterController from '../controllers/characters';
@@ -10,10 +10,10 @@ router.route('/movies')
   .get(MovieController.getAllMovies);
 
 router.route('/comments')
-  .post([CommentValidation, ValidateMovie], CommentController.createComment);
+  .post([CommentValidation, ValidateMovieInBody], CommentController.createComment);
 
 router.route('/comments/:id')
-  .get([IntegerValidation], CommentController.getCommentByMovie);
+  .get([IntegerValidation, ValidateMovieParams], CommentController.getCommentByMovie);
 
 router.route('/movies/:id/characters')
   .get([IntegerValidation, ValidateMovieCharacters], CharacterController.getCharactersByMovie);

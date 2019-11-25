@@ -110,7 +110,7 @@ create a  `.env` file then add url to your db.
 ---
     
 ## Running migrations
-    First install db-migrate globally and db-mihgrate-pg locally
+    First install db-migrate globally and db-migrate-pg locally
     $ npm run migrations-up:dev 
 
 ---

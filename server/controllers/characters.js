@@ -2,6 +2,10 @@ import axios from 'axios';
 import CharacterHelper from '../helpers/characterHelper'
 import { ErrorRxx, Response2xx } from './../helpers/handlers';
 import CacheStorage from '../cache';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const { baseURL } = process.env;
 
 class CharacterController{
         /**
@@ -27,8 +31,7 @@ class CharacterController{
                 return Response2xx(response, 200, 'Success', 'Movies characters successfully retrieved', cachedResult);       
             }
             
-            const url = 'https://swapi.co/api/films';
-            const result = await axios.get(`${url}/${id}`);
+            const result = await axios.get(`${baseURL}/films/${id}`);
             const { data: { characters } } = result;
             const allCharacters = characters.map(async characterUrl => (await axios.get(characterUrl)).data);
             const resultCharacters = await Promise.all(allCharacters);

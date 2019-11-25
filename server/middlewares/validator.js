@@ -1,8 +1,10 @@
 import Validator from 'validatorjs';
 import { ErrorRxx } from '../helpers/handlers';
 import axios from 'axios';
+import dotenv from 'dotenv';
 
-const newUrl = `https://swapi.co/api/films`;
+dotenv.config();
+const { baseURL } = process.env;
 
 /**
  * @name CommentValidation
@@ -56,10 +58,10 @@ const IntegerValidation = (request, response, next) => {
  * @returns {object} error
  * @description Validates Movie id Param in request fields
  */
-const ValidateMovie = async (request, response, next) => {
+const ValidateMovieInBody = async (request, response, next) => {
   try {
     const { episode_id } = request.body;
-    const  { data } = await axios.get(`${newUrl}/${episode_id}`);
+    const  { data } = await axios.get(`${baseURL}/films/${episode_id}`);
     if(data) return next()
   } catch (error) {
     return ErrorRxx(response, 404, 'Failure', 'The movie you try to comment on does not exist')
@@ -75,10 +77,29 @@ const ValidateMovie = async (request, response, next) => {
  * @returns {object} error
  * @description Validates Movie id Param in request fields
  */
+const ValidateMovieParams = async (request, response, next) => {
+  try {
+    const { id } = request.params;
+    const  { data } = await axios.get(`${baseURL}/films/${id}`);
+    if(data) return next()
+  } catch (error) {
+    return ErrorRxx(response, 404, 'Failure', 'This movie whose comments you try to retrieve does not exist');
+  }
+}
+
+/**
+ * @name MovieValidation
+ * @param {object} req
+ * @param {object} res
+ * @returns {function} next
+ * @returns {function} next
+ * @returns {object} error
+ * @description Validates Movie id Param in request fields
+ */
 const ValidateMovieCharacters = async (request, response, next) => {
   try {
     const { id } = request.params;
-    const { data } = await axios.get(`${newUrl}/${id}`);
+    const { data } = await axios.get(`${baseURL}/films/${id}`);
     if(data) return next()
   } catch (error) {
     return ErrorRxx(response, 404, 'Failure', 'The movie you try to get characters for does not exist')
@@ -86,5 +107,5 @@ const ValidateMovieCharacters = async (request, response, next) => {
 }
 
 export {
-  CommentValidation, IntegerValidation, ValidateMovie, ValidateMovieCharacters
+  CommentValidation, IntegerValidation, ValidateMovieInBody, ValidateMovieCharacters, ValidateMovieParams
 };
