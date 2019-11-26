@@ -3,11 +3,11 @@ class CharacterHelper{
 
    static async sortResult(results, query) {
         try {
-            switch (Object.values(query)[0]) {
+            switch (query.name) {
                 case 'asc':
                     return results.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
                 case 'desc':
-                    return results.sort((a,b) => (a.name > b.name) ? -1 : ((b.name > a.name) ? 1 : 0))
+                    return results.sort((a,b) => (a.name > b.name) ? -1 : ((b.name > a.name) ? 1 : 0));
                 default:
                     return results;
             }
@@ -19,7 +19,7 @@ class CharacterHelper{
     static async filterResult(results, query) {
         try {   
             const values = results.filter(item => {
-            switch (Object.values(query)[1]) {
+            switch (query.gender) {
                 case 'female':
                     return item.gender === 'female';
                 case 'male':

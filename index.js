@@ -20,7 +20,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const port = process.env.PORT || 3000;
 
-app.use('/api/v1', router);
+app.use((request, response, next) => {
+  response.setHeader('version', '1.0.0');
+  next();
+});
+
+app.use('/', router);
 
 app.get('/', (request, response) => {
   response.status(200).json({
