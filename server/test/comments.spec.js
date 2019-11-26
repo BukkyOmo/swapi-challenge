@@ -1,9 +1,8 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../index';
-import nock from 'nock';
 import Comment from '../mocks/comment';
-import getAmovieMock from '../mocks/movies'
+import { getAmovieMock } from '../mocks/movies'
 
 chai.use(chaiHttp);
 const { comment1, comment2, comment3, comment4 } = Comment;
@@ -97,4 +96,3 @@ it('it should throw an error if episode id is not an integer', done => {
       });
   })
 });
-

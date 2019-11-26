@@ -100,7 +100,12 @@ const ValidateMovieCharacters = async (request, response, next) => {
   try {
     const { id } = request.params;
     const { data } = await axios.get(`${baseURL}/films/${id}`);
-    if(data) return next()
+    if(data) {
+      request.body = {
+        data
+      };
+      return next()
+    }
   } catch (error) {
     return ErrorRxx(response, 404, 'Failure', 'The movie you try to get characters for does not exist')
   }

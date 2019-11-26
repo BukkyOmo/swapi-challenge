@@ -32,6 +32,7 @@ class CommentService{
             return true;
         } catch (error) {
             this.error = error.stack;
+            return false;
         }
     }
 }

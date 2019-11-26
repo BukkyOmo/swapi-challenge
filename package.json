@@ -10,7 +10,7 @@
     "test": "cross-env NODE_ENV=test nyc mocha --exit --require @babel/register --require @babel/polyfill --timeout 600000 server/./test/**/*.spec.js",
     "lint": "eslint --ext .js --ext .jsx .",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-core/register  _mocha --exit test/*.js",
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov --require babel-core/register _mocha --exit test/*.js",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
     "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
     "migrations-down:test": "db-migrate down --config database.json -e test",

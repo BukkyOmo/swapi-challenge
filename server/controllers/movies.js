@@ -20,20 +20,16 @@ class MovieController {
      * returns {object}
      * @memberof MovieController
      */
-  static async getAllMovies(request, response){
-        try {
-            const movieRedisKey = 'all';
-            const values =  await CacheStorage.fetch(movieRedisKey);
-            if(values) return Response2xx(response, 200, 'Success', 'Movies successfully retrieved', values);
-            const result = await axios.get(`${baseURL}/films`);
-            const { data: { results } } = result;
-            const movies = await getMoviesHelper(results);
-            await CacheStorage.save(movieRedisKey, movies);
-            return Response2xx(response, 200, 'Success', 'Movies successfully retrieved', movies);
-        } catch (error) {
-          return error;
-        }
-      };
+    static async getAllMovies(request, response){
+        const movieRedisKey = 'all';
+        const values =  await CacheStorage.fetch(movieRedisKey);
+        if(values) return Response2xx(response, 200, 'Success', 'Movies successfully retrieved', values);
+        const result = await axios.get(`${baseURL}/films`);
+        const { data: { results } } = result;
+        const movies = await getMoviesHelper(results);
+        await CacheStorage.save(movieRedisKey, movies);
+        return Response2xx(response, 200, 'Success', 'Movies successfully retrieved', movies);
+    };
 };
 
 export default MovieController;

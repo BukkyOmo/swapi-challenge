@@ -35,6 +35,7 @@ app.all('*', (request, response) => {
   });
 });
 
+/* istanbul ignore next */
 if(!module.parent) {
 app.listen(port, () => {
   logger.debug(`Application running on port ${port}`);
