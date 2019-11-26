@@ -13,10 +13,11 @@ class CommentsController {
      * @memberof CommentsController
      */
     static async createComment(request, response) {
-        const { comment, episode_id } = request.body;
+        const { comment } = request.body;
+        const { id } = request.params;
         const movieRedisKey = 'all';
         const { ip } = request;
-        const commentQuery = new CommentService({comment, episode_id, ip});
+        const commentQuery = new CommentService({comment, id, ip});
         const isSaved = await commentQuery.createComment()     
         if(!isSaved) return ErrorRxx(response, 500, 'Failure', 'Unable to save comment in database, please try again');
         await CacheStorage.delete(movieRedisKey);

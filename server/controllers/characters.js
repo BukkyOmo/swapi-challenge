@@ -14,7 +14,8 @@ class CharacterController{
      */
     static async getCharactersByMovie(request, response){
         const { id } = request.params;
-        const { query } = request; 
+        const { query } = request;
+
         const { data: { characters } } = request.body;
         const charactersRedisKey = id;
         const value =  await CacheStorage.fetch(charactersRedisKey);

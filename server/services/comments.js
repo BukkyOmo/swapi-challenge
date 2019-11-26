@@ -10,8 +10,8 @@ class CommentService{
     }
 
     async createComment() {
-        const { comment, episode_id, ip } = this.payload;
-        const values = [comment, parseInt(episode_id), ip];
+        const { comment, id, ip } = this.payload;
+        const values = [comment, parseInt(id), ip];
         try {
             const { rows } = await db.query(createComment, values);
             this.result = rows[0];
