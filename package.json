@@ -52,7 +52,7 @@
     "nodemon": "^1.19.4",
     "nyc": "^14.1.1",
     "pg": "^7.12.1",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "swagger-ui-express": "^4.1.2",
     "uuid": "^3.3.3",
     "validatorjs": "^3.17.1",
